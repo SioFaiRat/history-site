@@ -1,0 +1,22 @@
+{
+  "cityId": "kiev",
+  "cityName": "Киев",
+  "wikidataCity": "wd:Q1899",
+  "heroes": [],
+  "documents": [
+    {
+      "id": "kiev-liberation",
+      "title": "Директивы Ставки ВГК на Киевскую наступательную операцию (ноябрь–декабрь 1943)",
+      "archiveSource": "Подвиг народа",
+      "scanUrl": "https://podvignaroda.ru/",
+      "date": "1943-11-03"
+    },
+    {
+      "id": "kiev-1941",
+      "title": "Приказы Киевского Особого военного округа, июнь 1941 г.",
+      "archiveSource": "ЦАМО / Память народа",
+      "scanUrl": "https://pamyat-naroda.ru/",
+      "date": "1941-06-22"
+    }
+  ]
+}

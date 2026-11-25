@@ -1,0 +1,15 @@
+{
+  "cityId": "tula",
+  "cityName": "Тула",
+  "wikidataCity": "wd:Q2644",
+  "heroes": [],
+  "documents": [
+    {
+      "id": "tula-defense",
+      "title": "Приказы 50-й армии по обороне Тулы (октябрь–декабрь 1941)",
+      "archiveSource": "Память народа",
+      "scanUrl": "https://pamyat-naroda.ru/",
+      "date": "1941-10-30"
+    }
+  ]
+}
