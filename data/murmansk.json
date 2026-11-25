@@ -1,0 +1,15 @@
+{
+  "cityId": "murmansk",
+  "cityName": "Мурманск",
+  "wikidataCity": "wd:Q896",
+  "heroes": [],
+  "documents": [
+    {
+      "id": "murmansk-ally",
+      "title": "Документы Северных конвоев и базы Мурманск (1941–1945)",
+      "archiveSource": "prlib.ru / РГАВМФ",
+      "scanUrl": "https://www.prlib.ru/",
+      "date": "1941-09-12"
+    }
+  ]
+}

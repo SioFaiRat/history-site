@@ -1,0 +1,15 @@
+{
+  "cityId": "kerch",
+  "cityName": "Керчь",
+  "wikidataCity": "wd:Q1945",
+  "heroes": [],
+  "documents": [
+    {
+      "id": "kerch-feo",
+      "title": "Документы Керченско-Феодосийской десантной операции (декабрь 1941)",
+      "archiveSource": "Память народа",
+      "scanUrl": "https://pamyat-naroda.ru/",
+      "date": "1941-12-26"
+    }
+  ]
+}

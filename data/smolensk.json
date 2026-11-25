@@ -1,0 +1,15 @@
+{
+  "cityId": "smolensk",
+  "cityName": "Смоленск",
+  "wikidataCity": "wd:Q1809",
+  "heroes": [],
+  "documents": [
+    {
+      "id": "smolensk-battle",
+      "title": "Директивы и боевые приказы Смоленского сражения (июль–сентябрь 1941)",
+      "archiveSource": "Память народа",
+      "scanUrl": "https://pamyat-naroda.ru/",
+      "date": "1941-07-10"
+    }
+  ]
+}

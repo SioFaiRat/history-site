@@ -1,0 +1,22 @@
+{
+  "cityId": "minsk",
+  "cityName": "Минск",
+  "wikidataCity": "wd:Q2280",
+  "heroes": [],
+  "documents": [
+    {
+      "id": "minsk-underground",
+      "title": "Документы Минского подполья (областной центр, 1941–1944)",
+      "archiveSource": "НАРБ / Память народа",
+      "scanUrl": "https://pamyat-naroda.ru/",
+      "date": "1942-01-01"
+    },
+    {
+      "id": "bagration",
+      "title": "Директивы Ставки ВГК на операцию «Багратион» (освобождение Минска, июль 1944)",
+      "archiveSource": "Подвиг народа",
+      "scanUrl": "https://podvignaroda.ru/",
+      "date": "1944-06-23"
+    }
+  ]
+}

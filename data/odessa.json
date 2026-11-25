@@ -1,0 +1,15 @@
+{
+  "cityId": "odessa",
+  "cityName": "Одесса",
+  "wikidataCity": "wd:Q1870",
+  "heroes": [],
+  "documents": [
+    {
+      "id": "odessa-evacuation",
+      "title": "Директива Ставки ВГК об эвакуации Одесского гарнизона (октябрь 1941)",
+      "archiveSource": "Подвиг народа",
+      "scanUrl": "https://podvignaroda.ru/",
+      "date": "1941-10-01"
+    }
+  ]
+}
