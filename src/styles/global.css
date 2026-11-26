@@ -108,5 +108,69 @@ body {
   border: 1px solid #eee;
   padding: 15px;
   border-radius: 6px;
+
+  /* Стили для маркеров-звёзд */
+.star-marker {
+  color: #d4af37; /* Золотой цвет */
+  font-size: 28px;
+  font-weight: bold;
+  text-shadow: 
+    0 0 3px rgba(0, 0, 0, 0.8),
+    0 0 3px rgba(0, 0, 0, 0.8),
+    0 0 3px rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  transform: translate(-50%, -50%);
+}
+
+.star-marker:hover {
+  color: #ffd700;
+  transform: translate(-50%, -50%) scale(1.2);
+  transition: transform 0.2s, color 0.2s;
+}
+
+/* Стили для попапа */
+.map-popup {
+  min-width: 200px;
+  max-width: 280px;
+}
+
+.map-popup strong {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 4px;
+  color: #333;
+}
+
+.map-popup em {
+  display: block;
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 8px;
+  font-style: italic;
+}
+
+.map-popup p {
+  font-size: 13px;
+  line-height: 1.4;
+  margin-bottom: 8px;
+  color: #555;
+}
+
+.popup-link {
+  display: inline-block;
+  color: #0056b3;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.popup-link:hover {
+  text-decoration: underline;
+  color: #003d82;
+}
   background: #fafafa;
 }
