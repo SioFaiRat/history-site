@@ -5,6 +5,7 @@ import { getMonumentsByCity } from '../data/monuments';
 import { getDocumentsByCity } from '../data/documents';
 import { getEventsByCity } from '../data/events';
 import { fetchHeroesFromWikidata } from '../services/wikidata';
+import { getHeroesByCity } from '../data/heroes';
 
 const TABS = [
   { id: 'history', label: 'История' },
@@ -42,27 +43,28 @@ export default function CityPage() {
   const [heroes, setHeroes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Загружаем героев при смене города
   useEffect(() => {
-    console.log('=== CityPage useEffect запущен ===');
-    console.log('cityId:', cityId);
-    console.log('city:', city);
-    if (!cityId) return;
-    setIsLoading(true);
-    setHeroes([]);
-    console.log('Вызываем fetchHeroesFromWikidata...');
-    fetchHeroesFromWikidata(cityId)
-      .then((data) => {
-        console.log('Данные получены:', data);
-        setHeroes(data);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.error('Ошибка загрузки героев:', err);
-        setIsLoading(false);
-      });
-  }, [cityId]);
-
+  if (!cityId) return;
+  setIsLoading(true);
+  setHeroes([]);
+  
+  fetchHeroesFromWikidata(cityId)
+    .then((apiData) => {
+      if (apiData.length > 0) {
+        setHeroes(apiData);
+      } else {
+        // Fallback на локальную базу
+        console.log(`Wikidata вернул пусто для ${cityId}, используем локальную базу`);
+        setHeroes(getHeroesByCity(cityId));
+      }
+      setIsLoading(false);
+    })
+    .catch((err) => {
+      console.error('Ошибка Wikidata, используем локальную базу:', err);
+      setHeroes(getHeroesByCity(cityId));
+      setIsLoading(false);
+    });
+}, [cityId]);
   // Если город не найден в базе — показываем заглушку
   if (!city) {
     return (
