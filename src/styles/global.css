@@ -1,181 +1,112 @@
-:root {
-  --bg: #f6f2ea;
-  --ink: #2b2320;
-  --accent: #8c1c13; /* телогрейка/знамя */
-  --gold: #d4a017;   /* «Золотая Звезда» */
-  --card: #ffffff;
-  font-family: 'PT Serif', Georgia, serif;
+/* Базовый сброс и шрифт */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
-
-* { box-sizing: border-box; }
 
 body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f9f9f9;
 }
 
-.layout {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+/* Главная страница */
+.home {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
-.site-header {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.7rem 1.5rem;
-  background: var(--accent);
-  color: #fff;
+.intro {
+  text-align: center;
+  margin-bottom: 40px;
 }
 
-.logo {
-  color: var(--gold);
-  font-weight: bold;
-  text-decoration: none;
-  font-size: 1.2rem;
+.map-section {
+  margin-bottom: 40px;
 }
 
-.main-nav a {
-  color: #fff;
-  text-decoration: none;
-  margin-left: 1.2rem;
-}
-.main-nav a:hover { text-decoration: underline; }
-
-.content { flex: 1; }
-
-.site-footer {
-  padding: 1.2rem 1.5rem;
-  background: #2b2320;
-  color: #cfc6bd;
-  font-size: 0.85rem;
-}
-.site-footer a { color: var(--gold); }
-
-/* ——— Главная ——— */
-.intro { max-width: 760px; margin: 0 auto; padding: 2rem 1.5rem 0; }
-.intro h1 { font-size: 2.2rem; color: var(--accent); }
-
-.map-section { padding: 1.5rem; }
 .map-wrap {
-  height: 60vh;
-  min-height: 420px;
-  border: 3px solid var(--accent);
+  height: 500px; /* Фиксированная высота для карты */
+  border: 1px solid #ccc;
   border-radius: 8px;
   overflow: hidden;
 }
-.map-hint { font-size: 0.9rem; opacity: 0.8; }
 
-.star-marker .star {
-  color: var(--gold);
-  font-size: 26px;
-  text-shadow: 0 0 4px rgba(0,0,0,0.6);
-}
-
-.map-popup strong { color: var(--accent); }
-
-.cities-grid-section { padding: 0 1.5rem 2rem; }
 .cities-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
 }
 
 .city-card {
-  display: block;
-  background: var(--card);
-  border: 1px solid #ddd3c4;
+  background: white;
+  border: 1px solid #ddd;
   border-radius: 8px;
-  padding: 1rem;
+  padding: 20px;
   text-decoration: none;
-  color: var(--ink);
-  transition: transform 0.15s, box-shadow 0.15s;
+  color: inherit;
+  transition: box-shadow 0.2s;
 }
+
 .city-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
-}
-.city-card__star { color: var(--gold); font-size: 1.4rem; }
-.city-card h3 { margin: 0.2rem 0; color: var(--accent); }
-.city-card__modern { font-style: italic; margin: 0; font-size: 0.85rem; }
-.city-card__desc { font-size: 0.9rem; }
-.city-card__days { font-size: 0.85rem; color: #6b5d4f; }
-
-/* ——— Страница города ——— */
-.city-page { max-width: 860px; margin: 0 auto; padding: 1.5rem; }
-.city-page__header { display: flex; gap: 1rem; align-items: center; }
-.city-page__star { color: var(--gold); font-size: 3rem; }
-.city-page__header h1 { margin: 0; color: var(--accent); }
-
-.city-section {
-  background: var(--card);
-  border-radius: 8px;
-  padding: 1.2rem 1.5rem;
-  margin-top: 1.2rem;
-  border-left: 4px solid var(--gold);
-}
-.city-section h2 { margin-top: 0; color: var(--accent); }
-
-.heroes-list { list-style: none; padding: 0; }
-.hero-card {
-  border-bottom: 1px dashed #ccc;
-  padding: 0.8rem 0;
-}
-.hero-card h3 { margin: 0 0 0.2rem; }
-.hero-card__meta, .hero-card__birth { font-size: 0.85rem; color: #6b5d4f; margin: 0.1rem 0; }
-
-.monument-card { padding: 0.8rem 0; border-bottom: 1px dashed #ccc; }
-.monument-card__coords { font-size: 0.85rem; }
-
-.placeholder {
-  background: #f3ead6;
-  padding: 0.8rem;
-  border-radius: 6px;
-  font-size: 0.9rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
-.facts { display: flex; gap: 2rem; }
-.facts dt { font-size: 0.8rem; color: #6b5d4f; }
-.facts dd { font-size: 1.6rem; margin: 0; color: var(--accent); font-weight: bold; }
+/* Страница города */
+.city-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  background: white;
+  min-height: 100vh;
+}
 
-/* ——— Хронология ——— */
-.timeline-page, .compare-page { max-width: 860px; margin: 0 auto; padding: 1.5rem; }
-.timeline { list-style: none; padding: 0; border-left: 3px solid var(--accent); }
-.timeline__item {
+.city-header {
+  margin-bottom: 20px;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 10px;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 10px;
+  color: #0056b3;
+  text-decoration: none;
+}
+
+.city-tabs {
   display: flex;
-  gap: 1rem;
-  padding: 0.8rem 0 0.8rem 1rem;
-  position: relative;
+  gap: 10px;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #ddd;
 }
-.timeline__item::before {
-  content: '';
-  position: absolute;
-  left: -8px;
-  top: 1.2rem;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: var(--gold);
-}
-.timeline__date { min-width: 110px; font-weight: bold; color: var(--accent); }
 
-/* ——— Сравнение ——— */
-.compare-table { width: 100%; border-collapse: collapse; background: var(--card); }
-.compare-table th, .compare-table td {
-  padding: 0.5rem 0.7rem;
-  border-bottom: 1px solid #e4dccd;
-  text-align: left;
+.tab {
+  padding: 10px 20px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 16px;
+  border-bottom: 3px solid transparent;
 }
-.compare-table .bar {
-  height: 14px;
-  background: linear-gradient(90deg, var(--accent), var(--gold));
-  border-radius: 4px;
-  min-width: 4px;
+
+.tab.active {
+  border-bottom-color: #d4af37; /* Золотой цвет для акцента */
+  font-weight: bold;
 }
-.compare-table a { color: var(--accent); text-decoration: none; }
-.compare-table a:hover { text-decoration: underline; }
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.hero-card {
+  border: 1px solid #eee;
+  padding: 15px;
+  border-radius: 6px;
+  background: #fafafa;
+}
