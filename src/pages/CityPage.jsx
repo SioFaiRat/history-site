@@ -1,168 +1,216 @@
+import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { getCityById } from '../data/cities.js';
-import { getHeroesByCity } from '../data/heroes.js';
-import { getMonumentsByCity } from '../data/monuments.js';
-import { getDocumentsByCity } from '../data/documents.js';
-import { getEventsByCity } from '../data/events.js';
+import { getCityById } from '../data/cities';
+import { getMonumentsByCity } from '../data/monuments';
+import { getDocumentsByCity } from '../data/documents';
+import { getEventsByCity } from '../data/events';
+import { fetchHeroesFromWikidata } from '../services/wikidata';
+
+const TABS = [
+  { id: 'history', label: 'История' },
+  { id: 'heroes', label: 'Герои' },
+  { id: 'monuments', label: 'Памятники' },
+  { id: 'documents', label: 'Документы' },
+  { id: 'facts', label: 'Цифры и факты' },
+];
+
+function daysBetween(startISO, endISO) {
+  if (!startISO || !endISO) return '—';
+  const ms = new Date(endISO) - new Date(startISO);
+  return Math.round(ms / (1000 * 60 * 60 * 24));
+}
 
 function formatDate(iso) {
-  if (!iso) return '';
-  const d = new Date(iso);
-  return d.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
+  if (!iso) return '—';
+  try {
+    return new Date(iso).toLocaleDateString('ru-RU', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    });
+  } catch {
+    return iso;
+  }
 }
 
 export default function CityPage() {
   const { cityId } = useParams();
   const city = getCityById(cityId);
+  const [tab, setTab] = useState('history');
 
+  // Состояния для героев из API
+  const [heroes, setHeroes] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Загружаем героев при смене города
+  useEffect(() => {
+    if (!cityId) return;
+    setIsLoading(true);
+    setHeroes([]);
+    fetchHeroesFromWikidata(cityId)
+      .then((data) => {
+        setHeroes(data);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.error('Ошибка загрузки героев:', err);
+        setIsLoading(false);
+      });
+  }, [cityId]);
+
+  // Если город не найден в базе — показываем заглушку
   if (!city) {
     return (
       <div className="city-page">
-        <h1>Город не найден</h1>
-        <Link to="/">← Вернуться на карту</Link>
+        <p>Город «{cityId}» не найден.</p>
+        <Link to="/" className="back-link">← Вернуться на карту</Link>
       </div>
     );
   }
 
-  const heroes = getHeroesByCity(city.id);
-  const monuments = getMonumentsByCity(city.id);
-  const documents = getDocumentsByCity(city.id);
-  const events = getEventsByCity(city.id).sort((a, b) =>
-    a.date.localeCompare(b.date),
-  );
+  const monuments = getMonumentsByCity(cityId);
+  const documents = getDocumentsByCity(cityId);
+  const events = getEventsByCity(cityId);
+  const defenseDays = daysBetween(city.defenseStart, city.defenseEnd);
 
   return (
-    <article className="city-page">
-      <header className="city-page__header">
-        <span className="city-page__star">★</span>
-        <div>
-          <h1>{city.name}</h1>
-          {city.modernName !== city.name && (
-            <p className="city-page__modern">современное название — {city.modernName}</p>
-          )}
-          <p className="city-page__award">
-            Звание присвоено: {formatDate(city.awardDate)}
-          </p>
-        </div>
+    <div className="city-page">
+      <header className="city-header">
+        <Link to="/" className="back-link">← Карта</Link>
+        <h1>{city.name}</h1>
+        {city.modernName && city.modernName !== city.name && (
+          <p className="modern-name">Современное название: {city.modernName}</p>
+        )}
       </header>
 
-      {/* Вкладки-разделы города */}
-      <section className="city-section" id="history">
-        <h2>История обороны</h2>
-        <p>{city.shortDescription}</p>
-        <ul className="timeline-mini">
-          {events.map((e) => (
-            <li key={e.id}>
-              <strong>{formatDate(e.date)}</strong> — {e.title}. {e.description}
-            </li>
-          ))}
-        </ul>
-        <p>
-          TODO: добавить карты боёв и развёрнутую хронологию (по материалам
-          «Памяти народа» — боевые документы подразделений по направлению
-          боёв «{city.modernName}»).
-        </p>
-      </section>
+      <nav className="city-tabs">
+        {TABS.map((t) => (
+          <button
+            key={t.id}
+            className={`tab ${tab === t.id ? 'active' : ''}`}
+            onClick={() => setTab(t.id)}
+          >
+            {t.label}
+          </button>
+        ))}
+      </nav>
 
-      <section className="city-section" id="heroes">
-        <h2>Герои</h2>
-        {heroes.length === 0 ? (
-          <p className="placeholder">
-            Список героев заполняется через API «Память народа». Планируется
-            фильтр по родам войск.
-          </p>
-        ) : (
-          <ul className="heroes-list">
-            {heroes.map((h) => (
-              <li key={h.id} className="hero-card">
-                <h3>{h.name}</h3>
-                <p className="hero-card__meta">
-                  {h.rank} · {h.branch} · награда: {formatDate(h.awardDate)}
-                </p>
-                <p className="hero-card__birth">Место рождения: {h.birthPlace}</p>
-                <p>{h.biography}</p>
-              </li>
-            ))}
-          </ul>
+      <section className="city-content">
+        {tab === 'history' && (
+          <div>
+            <p className="city-desc">{city.shortDescription || city.description}</p>
+            {events.length > 0 && (
+              <ul className="event-list">
+                {events.map((e) => (
+                  <li key={e.id}>
+                    <span className="event-date">{formatDate(e.date)}</span>
+                    <strong>{e.title}</strong>
+                    <p>{e.description}</p>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
         )}
-      </section>
 
-      <section className="city-section" id="monuments">
-        <h2>Памятники и мемориалы</h2>
-        {monuments.length === 0 ? (
-          <p className="placeholder">Мемориалы этого города ещё добавляются.</p>
-        ) : (
-          monuments.map((m) => (
-            <div key={m.id} className="monument-card">
-              <h3>{m.name}</h3>
-              <p>{m.description}</p>
-              <p className="monument-card__coords">
-                Координаты: {m.coordinates.join(', ')} ·{' '}
-                <a
-                  href={`https://www.openstreetmap.org/?mlat=${m.coordinates[0]}&mlon=${m.coordinates[1]}#map=15/${m.coordinates[0]}/${m.coordinates[1]}`}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  показать на карте
-                </a>
+        {tab === 'heroes' && (
+          <div>
+            <p className="tab-hint">
+              Герои — уроженцы города, данные подгружаются из Wikidata.
+            </p>
+            {isLoading ? (
+              <p>Загрузка данных...</p>
+            ) : heroes.length === 0 ? (
+              <p>
+                Данные о героях-уроженцах для этого города в Wikidata не найдены.
+                Возможно, список будет пополнен позже из локальной базы.
               </p>
-              {/* TODO: фото от дизайнера в public/images/monuments/ */}
-            </div>
-          ))
+            ) : (
+              <div className="hero-grid">
+                {heroes.map((h) => (
+                  <article key={h.id} className="hero-card">
+                    <h3>{h.name}</h3>
+                    <p className="hero-rank">{h.rank}</p>
+                    <p className="hero-birth">
+                      Год рождения: {h.birthDate ? h.birthDate.split('-')[0] : 'неизвестно'}
+                    </p>
+                    <p className="hero-bio">{h.biography}</p>
+                    <small className="hero-source">Источник: {h.source}</small>
+                  </article>
+                ))}
+              </div>
+            )}
+          </div>
         )}
-      </section>
 
-      <section className="city-section" id="documents">
-        <h2>Документы</h2>
-        {documents.length === 0 ? (
-          <p className="placeholder">
-            Сканы из архивов подключаются через сервис{' '}
-            <code>src/services/pamyatNaroda.js</code>.
-          </p>
-        ) : (
-          <ul className="docs-list">
-            {documents.map((d) => (
-              <li key={d.id}>
-                <a href={d.scanUrl} target="_blank" rel="noreferrer">
-                  {d.title}
-                </a>{' '}
-                <em>({d.archiveSource}, {formatDate(d.date)})</em>
-              </li>
-            ))}
+        {tab === 'monuments' && (
+          <div className="monument-grid">
+            {monuments.length === 0 ? (
+              <p>Список памятников пока не заполнен.</p>
+            ) : (
+              monuments.map((m) => (
+                <article key={m.id} className="monument-card">
+                  {m.photoUrl && (
+                    <img src={m.photoUrl} alt={m.name} className="monument-photo" />
+                  )}
+                  <h3>{m.name}</h3>
+                  <p>{m.description}</p>
+                </article>
+              ))
+            )}
+          </div>
+        )}
+
+        {tab === 'documents' && (
+          <ul className="doc-list">
+            {documents.length === 0 ? (
+              <li>Документы пока не добавлены.</li>
+            ) : (
+              documents.map((d) => (
+                <li key={d.id}>
+                  <a href={d.scanUrl} target="_blank" rel="noreferrer">
+                    {d.title}
+                  </a>
+                  <span className="doc-meta">
+                    {formatDate(d.date)} · источник: {d.archiveSource}
+                  </span>
+                </li>
+              ))
+            )}
           </ul>
         )}
+
+        {tab === 'facts' && (
+          <dl className="facts">
+            <div>
+              <dt>Период обороны</dt>
+              <dd>
+                {formatDate(city.defenseStart)} — {formatDate(city.defenseEnd)}
+              </dd>
+            </div>
+            <div>
+              <dt>Дней обороны</dt>
+              <dd>{defenseDays}</dd>
+            </div>
+            <div>
+              <dt>Героев в базе (Wikidata)</dt>
+              <dd>{heroes.length}</dd>
+            </div>
+            <div>
+              <dt>Памятников</dt>
+              <dd>{monuments.length}</dd>
+            </div>
+            <div>
+              <dt>Документов</dt>
+              <dd>{documents.length}</dd>
+            </div>
+          </dl>
+        )}
       </section>
 
-      <section className="city-section" id="facts">
-        <h2>Цифры и факты</h2>
-        <dl className="facts">
-          <div>
-            <dt>Дней обороны</dt>
-            <dd>{city.facts.defenseDays}</dd>
-          </div>
-          <div>
-            <dt>Начало</dt>
-            <dd>{formatDate(city.defenseStart)}</dd>
-          </div>
-          <div>
-            <dt>Окончание</dt>
-            <dd>{formatDate(city.defenseEnd)}</dd>
-          </div>
-        </dl>
-        <ul>
-          {city.facts.keyEvents.map((k) => (
-            <li key={k}>{k}</li>
-          ))}
-        </ul>
-        <p className="placeholder">
-          TODO: инфографика (потери, награждённые) после подключения данных
-          ОБД «Мемориал» и Росархива.
-        </p>
-      </section>
-
-      <footer>
-        <Link to="/">← К карте всех городов</Link>
+      <footer className="city-footer">
+        <Link to="/" className="back-link">← К карте всех городов</Link>
       </footer>
-    </article>
+    </div>
   );
 }
