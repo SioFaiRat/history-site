@@ -44,11 +44,16 @@ export default function CityPage() {
 
   // Загружаем героев при смене города
   useEffect(() => {
+    console.log('=== CityPage useEffect запущен ===');
+    console.log('cityId:', cityId);
+    console.log('city:', city);
     if (!cityId) return;
     setIsLoading(true);
     setHeroes([]);
+    console.log('Вызываем fetchHeroesFromWikidata...');
     fetchHeroesFromWikidata(cityId)
       .then((data) => {
+        console.log('Данные получены:', data);
         setHeroes(data);
         setIsLoading(false);
       })
