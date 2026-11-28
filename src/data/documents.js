@@ -42,6 +42,31 @@ export const documents = [
     cityId: 'odessa',
     date: '1941-10-01',
   },
+  // Смоленск
+{
+  id: 'smolensk-defense-order-1941',
+  title: 'Приказ Ставки ВГК об обороне Смоленска (июль 1941)',
+  archiveSource: 'Память народа (pamyat-naroda.ru)',
+  scanUrl: 'https://pamyat-naroda.ru/',
+  cityId: 'smolensk',
+  date: '1941-07-10'
+},
+{
+  id: 'smolensk-liberation-1943',
+  title: 'Донесение об освобождении Смоленска (25 сентября 1943)',
+  archiveSource: 'Подвиг народа (podvignaroda.ru)',
+  scanUrl: 'https://podvignaroda.ru/',
+  cityId: 'smolensk',
+  date: '1943-09-25'
+},
+  {
+  id: 'murmansk-defense-1941',
+  title: 'Директива о обороне Мурманска и Кировской железной дороги (1941)',
+  archiveSource: 'Память народа',
+  scanUrl: 'https://pamyat-naroda.ru/',
+  cityId: 'murmansk',
+  date: '1941-06-29'
+},
 ];
 
 export const getDocumentsByCity = (cityId) =>
