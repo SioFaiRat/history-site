@@ -56,6 +56,64 @@ export const monuments = [
       'Комплекс памяти Великой Отечественной войны (открыт 9 мая 1995 г.): Обелиск Победы (141,8 м — высота по годам войны), храм Георгия Победоносца, музей.',
     photoUrl: '/images/monuments/poklonnaya.jpg',
   },
+
+  // Смоленск
+{
+  id: 'smolensk-kurgan-slavy',
+  name: 'Курган Бессмертия',
+  cityId: 'smolensk',
+  coordinates: [54.7818, 32.0401],
+  description: 'Мемориальный комплекс в честь воинов, погибших в боях за Смоленск. Открыт в 1969 году. Высота кургана — 12 метров.',
+  photoUrl: '/images/monuments/smolensk-kurgan.jpg'
+},
+{
+  id: 'smolensk-wall-memory',
+  name: 'Стена Памяти',
+  cityId: 'smolensk',
+  coordinates: [54.7825, 32.0415],
+  description: 'Мемориал с именами смолян, погибших в Великой Отечественной войне. Расположен в сквере Памяти Героев.',
+  photoUrl: '/images/monuments/smolensk-wall.jpg'
+},
+{
+  id: 'smolensk-monument-liberators',
+  name: 'Памятник освободителям Смоленска',
+  cityId: 'smolensk',
+  coordinates: [54.7810, 32.0390],
+  description: 'Монумент в честь воинов 68-й армии, освободивших Смоленск 25 сентября 1943 года.',
+  photoUrl: '/images/monuments/smolensk-liberators.jpg'
+},
+  {
+  id: 'murmansk-alyosha',
+  name: 'Мемориал «Защитникам Советского Заполярья в годы Великой Отечественной войны» (Алёша)',
+  cityId: 'murmansk',
+  coordinates: [68.9585, 33.0827],
+  description: '42-метровая фигура солдата на сопке Зеленый Мыс. Открыт в 1974 году. Символ Мурманска.',
+  photoUrl: '/images/monuments/murmansk-alyosha.jpg'
+},
+{
+  id: 'murmansk-submarine',
+  name: 'Памятник подводникам Северного флота',
+  cityId: 'murmansk',
+  coordinates: [68.9700, 33.0900],
+  description: 'Мемориал в честь подводников, погибших в годы войны. Рубка подводной лодки С-56.',
+  photoUrl: '/images/monuments/murmansk-sub.jpg'
+},
+  {
+  id: 'tula-monument-defenders',
+  name: 'Памятник защитникам Тулы',
+  cityId: 'tula',
+  coordinates: [54.1961, 37.6182],
+  description: 'Мемориал в честь туляков, оборонявших город в 1941 году. Открыт в 1968 году.',
+  photoUrl: '/images/monuments/tula-defenders.jpg'
+},
+  {
+  id: 'kerch-adjimushkay',
+  name: 'Мемориал «Аджимушкайские каменоломни»',
+  cityId: 'kerch',
+  coordinates: [45.3562, 36.4674],
+  description: 'Мемориал в честь защитников Аджимушкайских каменоломен, державших оборону с мая по октябрь 1942 года.',
+  photoUrl: '/images/monuments/kerch-adjimushkay.jpg'
+},
 ];
 
 export const getMonumentsByCity = (cityId) =>
