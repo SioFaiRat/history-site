@@ -114,6 +114,23 @@ export const monuments = [
   description: 'Мемориал в честь защитников Аджимушкайских каменоломен, державших оборону с мая по октябрь 1942 года.',
   photoUrl: '/images/monuments/kerch-adjimushkay.jpg'
 },
+  // Одесса
+{
+  id: 'odessa-sailor-monument',
+  name: 'Памятник неизвестному матросу',
+  cityId: 'odessa',
+  coordinates: [46.4846, 30.7334],
+  description: '21-метровый обелиск из красного гранита с Вечным огнём на Аллее Славы в парке им. Т. Г. Шевченко. Открыт 9 мая 1960 года.',
+  photoUrl: '/images/monuments/odessa-sailor.jpg'
+},
+{
+  id: 'odessa-411-battery',
+  name: 'Мемориал героической обороны Одессы (411-я береговая батарея)',
+  cityId: 'odessa',
+  coordinates: [46.4414, 30.7647],
+  description: 'Мемориал на месте 411-й береговой батареи, державшей оборону до последних дней осады. Открыт в 1969 году, музей под открытым небом.',
+  photoUrl: '/images/monuments/odessa-411.jpg'
+},
 ];
 
 export const getMonumentsByCity = (cityId) =>
